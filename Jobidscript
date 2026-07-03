@@ -1,0 +1,188 @@
+task.spawn(function()
+    repeat task.wait() until game:IsLoaded()
+
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+
+    local LP = Players.LocalPlayer
+    local PlayerGui = LP:WaitForChild("PlayerGui")
+
+    -- ===== BUAT GUI =====
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "JobIDCopierGUI"
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    screenGui.Parent = PlayerGui
+
+    -- ===== MAIN FRAME =====
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 220, 0, 110)
+    mainFrame.Position = UDim2.new(0.5, -110, 0.5, -55) -- Tengah layar
+    mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.Active = true
+    mainFrame.Parent = screenGui
+
+    -- ===== BORDER MELENGKUNG =====
+    local mainCorner = Instance.new("UICorner")
+    mainCorner.CornerRadius = UDim.new(0, 10)
+    mainCorner.Parent = mainFrame
+
+    -- ===== BORDER UNGU =====
+    local mainStroke = Instance.new("UIStroke")
+    mainStroke.Color = Color3.fromRGB(200, 0, 255) -- UNGU TERANG
+    mainStroke.Thickness = 2.5
+    mainStroke.Parent = mainFrame
+
+    -- ===== TITLE BAR (buat drag) =====
+    local titleBar = Instance.new("Frame")
+    titleBar.Name = "TitleBar"
+    titleBar.Size = UDim2.new(1, 0, 0, 28)
+    titleBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    titleBar.BorderSizePixel = 0
+    titleBar.Active = true
+    titleBar.Parent = mainFrame
+
+    local titleCorner = Instance.new("UICorner")
+    titleCorner.CornerRadius = UDim.new(0, 10)
+    titleCorner.Parent = titleBar
+
+    local titleFix = Instance.new("Frame")
+    titleFix.Size = UDim2.new(1, 0, 0, 10)
+    titleFix.Position = UDim2.new(0, 0, 1, -10)
+    titleFix.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    titleFix.BorderSizePixel = 0
+    titleFix.ZIndex = 0
+    titleFix.Parent = titleBar
+
+    -- ===== JUDUL =====
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -16, 1, 0)
+    titleLabel.Position = UDim2.new(0, 8, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = "📋 JOB ID MAP"
+    titleLabel.TextColor3 = Color3.fromRGB(200, 0, 255) -- Ungu
+    titleLabel.Font = Enum.Font.GothamBlack
+    titleLabel.TextSize = 14
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Parent = titleBar
+
+    -- ===== TOMBOL SALIN JOB ID =====
+    local copyButton = Instance.new("TextButton")
+    copyButton.Name = "CopyButton"
+    copyButton.Size = UDim2.new(1, -20, 0, 32)
+    copyButton.Position = UDim2.new(0, 10, 0, 38)
+    copyButton.BackgroundColor3 = Color3.fromRGB(200, 0, 255) -- Ungu
+    copyButton.Text = "📋 SALIN JOB ID"
+    copyButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+    copyButton.Font = Enum.Font.GothamBlack
+    copyButton.TextSize = 14
+    copyButton.AutoButtonColor = false
+    copyButton.Parent = mainFrame
+
+    local copyCorner = Instance.new("UICorner")
+    copyCorner.CornerRadius = UDim.new(0, 8)
+    copyCorner.Parent = copyButton
+
+    local copyStroke = Instance.new("UIStroke")
+    copyStroke.Color = Color3.fromRGB(100, 0, 150)
+    copyStroke.Thickness = 1.5
+    copyStroke.Parent = copyButton
+
+    -- ===== STATUS LABEL =====
+    local statusLabel = Instance.new("TextLabel")
+    statusLabel.Size = UDim2.new(1, -20, 0, 18)
+    statusLabel.Position = UDim2.new(0, 10, 0, 76)
+    statusLabel.BackgroundTransparency = 1
+    statusLabel.Text = "Status: Siap salin"
+    statusLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+    statusLabel.Font = Enum.Font.Gotham
+    statusLabel.TextSize = 12
+    statusLabel.TextXAlignment = Enum.TextXAlignment.Left
+    statusLabel.Parent = mainFrame
+
+    -- ========================================
+    -- ===== FUNGSI SALIN JOB ID =====
+    -- ========================================
+    copyButton.MouseButton1Click:Connect(function()
+        local jobId = game.JobId
+        if jobId then
+            setclipboard(jobId)
+            copyButton.Text = "✅ TERSALIN!"
+            copyButton.BackgroundColor3 = Color3.fromRGB(0, 255, 100)
+            statusLabel.Text = "Status: Tersalin! ID: " .. jobId
+            statusLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
+            task.wait(1.5)
+            copyButton.Text = "📋 SALIN JOB ID"
+            copyButton.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
+            statusLabel.Text = "Status: Siap salin"
+            statusLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+        else
+            copyButton.Text = "❌ GAGAL!"
+            copyButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            statusLabel.Text = "Status: Gagal ambil ID!"
+            statusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+            task.wait(1)
+            copyButton.Text = "📋 SALIN JOB ID"
+            copyButton.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
+            statusLabel.Text = "Status: Siap salin"
+            statusLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+        end
+    end)
+
+    -- ========================================
+    -- ===== HOVER EFFECT =====
+    -- ========================================
+    copyButton.MouseEnter:Connect(function()
+        copyButton.BackgroundColor3 = Color3.fromRGB(255, 0, 255)
+        copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end)
+
+    copyButton.MouseLeave:Connect(function()
+        copyButton.BackgroundColor3 = Color3.fromRGB(200, 0, 255)
+        copyButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+    end)
+
+    -- ========================================
+    -- ===== DRAGGABLE (PASTI BISA) =====
+    -- ========================================
+    local dragging = false
+    local dragInput = nil
+    local dragStart = nil
+    local startPos = nil
+
+    titleBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = mainFrame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    titleBar.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            mainFrame.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+    print("✅ UI Job ID Copier siap! Drag di judul untuk pindah.")
+end)
