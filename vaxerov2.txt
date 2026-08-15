@@ -1,0 +1,434 @@
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local Old = PlayerGui:FindFirstChild("VaxeroGUI")
+if Old then
+    Old:Destroy()
+end
+
+local LOGO = "rbxassetid://88767169354876"
+
+local BG = Color3.fromRGB(7, 8, 13)
+local PANEL = Color3.fromRGB(12, 14, 22)
+local BLUE = Color3.fromRGB(35, 95, 255)
+local BLUE2 = Color3.fromRGB(70, 125, 255)
+local WHITE = Color3.fromRGB(240, 245, 255)
+local GRAY = Color3.fromRGB(145, 150, 165)
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "VaxeroGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = PlayerGui
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Size = UDim2.fromOffset(280, 360)
+Main.Position = UDim2.new(0.065, 0, 0.14, 0)
+Main.BackgroundColor3 = BG
+Main.BorderSizePixel = 0
+Main.Visible = false
+Main.ClipsDescendants = true
+Main.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 15)
+MainCorner.Parent = Main
+
+local MainScale = Instance.new("UIScale")
+MainScale.Name = "MainScale"
+MainScale.Scale = 1
+MainScale.Parent = Main
+
+local Background = Instance.new("ImageLabel")
+Background.Name = "Background"
+Background.Size = UDim2.fromScale(1, 1)
+Background.Position = UDim2.fromScale(0, 0)
+Background.BackgroundTransparency = 1
+Background.Image = LOGO
+Background.ImageTransparency = 0.72
+Background.ScaleType = Enum.ScaleType.Crop
+Background.ZIndex = 0
+Background.Parent = Main
+
+local BackgroundCorner = Instance.new("UICorner")
+BackgroundCorner.CornerRadius = UDim.new(0, 15)
+BackgroundCorner.Parent = Background
+
+local Overlay = Instance.new("Frame")
+Overlay.Name = "Overlay"
+Overlay.Size = UDim2.fromScale(1, 1)
+Overlay.BackgroundColor3 = BG
+Overlay.BackgroundTransparency = 0.27
+Overlay.BorderSizePixel = 0
+Overlay.ZIndex = 1
+Overlay.Parent = Main
+
+local OverlayCorner = Instance.new("UICorner")
+OverlayCorner.CornerRadius = UDim.new(0, 15)
+OverlayCorner.Parent = Overlay
+
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -55, 0, 30)
+Title.Position = UDim2.fromOffset(12, 10)
+Title.BackgroundTransparency = 1
+Title.Text = "VAX'ERO"
+Title.TextColor3 = WHITE
+Title.TextSize = 20
+Title.Font = Enum.Font.GothamBlack
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 5
+Title.Parent = Main
+
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Name = "Subtitle"
+Subtitle.Size = UDim2.new(1, -24, 0, 16)
+Subtitle.Position = UDim2.fromOffset(13, 36)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "DUELS"
+Subtitle.TextColor3 = BLUE2
+Subtitle.TextSize = 9
+Subtitle.Font = Enum.Font.GothamBold
+Subtitle.TextXAlignment = Enum.TextXAlignment.Left
+Subtitle.ZIndex = 5
+Subtitle.Parent = Main
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.fromOffset(28, 22)
+CloseButton.Position = UDim2.new(1, -38, 0, 12)
+CloseButton.BackgroundColor3 = PANEL
+CloseButton.BorderSizePixel = 0
+CloseButton.Text = "local ButtonNames = {
+    "DROP BR",
+    "AUTO LEFT",
+    "AIMBOT",
+    "AUTO RIGHT",
+    "TP DOWN",
+    "CARRY",
+    "LAGGER",
+    "ANTIBAT BYPASS",
+    "TP BAT"
+}
+
+Button.Text = ButtonNames[i]
+Button.TextColor3 = Color3.fromRGB(255,255,255)
+Button.TextSize = 8
+Button.Font = Enum.Font.GothamBold
+Button.TextWrapped = true
+Button.TextXAlignment = Enum.TextXAlignment.Center
+Button.TextYAlignment = Enum.TextYAlignment.Center"
+CloseButton.TextColor3 = WHITE
+CloseButton.TextSize = 12
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.AutoButtonColor = false
+CloseButton.ZIndex = 10
+CloseButton.Parent = Main
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseButton
+
+local TabHolder = Instance.new("Frame")
+TabHolder.Name = "Tabs"
+TabHolder.Size = UDim2.new(1, -20, 0, 36)
+TabHolder.Position = UDim2.fromOffset(10, 58)
+TabHolder.BackgroundTransparency = 1
+TabHolder.BorderSizePixel = 0
+TabHolder.ZIndex = 5
+TabHolder.Parent = Main
+
+local TabNames = {
+    "Speed",
+    "Mech",
+    "Visual",
+    "Setting"
+}
+
+local TabButtons = {}
+
+for Index, Name in ipairs(TabNames) do
+    local Button = Instance.new("TextButton")
+    Button.Name = Name .. "Tab"
+    Button.Size = UDim2.fromOffset(58, 30)
+    Button.Position = UDim2.fromOffset((Index - 1) * 62, 3)
+    Button.BackgroundColor3 = PANEL
+    Button.BorderSizePixel = 0
+    Button.Text = Name
+    Button.TextColor3 = GRAY
+    Button.TextSize = 9
+    Button.Font = Enum.Font.GothamBold
+    Button.AutoButtonColor = false
+    Button.ZIndex = 7
+    Button.Parent = TabHolder
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.Parent = Button
+
+    TabButtons[Name] = Button
+end
+
+local Content = Instance.new("Frame")
+Content.Name = "Content"
+Content.Size = UDim2.new(1, -20, 1, -105)
+Content.Position = UDim2.fromOffset(10, 100)
+Content.BackgroundColor3 = PANEL
+Content.BackgroundTransparency = 0.12
+Content.BorderSizePixel = 0
+Content.ZIndex = 4
+Content.Parent = Main
+
+local ContentCorner = Instance.new("UICorner")
+ContentCorner.CornerRadius = UDim.new(0, 11)
+ContentCorner.Parent = Content
+
+local Pages = {}
+
+for _, Name in ipairs(TabNames) do
+    local Page = Instance.new("Frame")
+    Page.Name = Name .. "Page"
+    Page.Size = UDim2.fromScale(1, 1)
+    Page.BackgroundTransparency = 1
+    Page.BorderSizePixel = 0
+    Page.Visible = false
+    Page.ZIndex = 6
+    Page.Parent = Content
+
+    Pages[Name] = Page
+end
+
+local function SelectTab(Name)
+    for PageName, Page in pairs(Pages) do
+        Page.Visible = PageName == Name
+    end
+
+    for _, TabName in ipairs(TabNames) do
+        local Button = TabButtons[TabName]
+
+        if TabName == Name then
+            Button.BackgroundColor3 = BLUE
+            Button.TextColor3 = WHITE
+        else
+            Button.BackgroundColor3 = PANEL
+            Button.TextColor3 = GRAY
+        end
+    end
+end
+
+for _, Name in ipairs(TabNames) do
+    TabButtons[Name].MouseButton1Click:Connect(function()
+        SelectTab(Name)
+    end)
+end
+
+SelectTab("Speed")
+
+local SettingPage = Pages["Setting"]
+
+local SizeTitle = Instance.new("TextLabel")
+SizeTitle.Size = UDim2.new(1, -20, 0, 20)
+SizeTitle.Position = UDim2.fromOffset(10, 10)
+SizeTitle.BackgroundTransparency = 1
+SizeTitle.Text = "GUI SIZE"
+SizeTitle.TextColor3 = WHITE
+SizeTitle.TextSize = 10
+SizeTitle.Font = Enum.Font.GothamBold
+SizeTitle.TextXAlignment = Enum.TextXAlignment.Left
+SizeTitle.ZIndex = 8
+SizeTitle.Parent = SettingPage
+
+local SizeBox = Instance.new("TextBox")
+SizeBox.Name = "SizeBox"
+SizeBox.Size = UDim2.new(1, -20, 0, 36)
+SizeBox.Position = UDim2.fromOffset(10, 35)
+SizeBox.BackgroundColor3 = PANEL
+SizeBox.BorderSizePixel = 0
+SizeBox.Text = "100"
+SizeBox.PlaceholderText = "50 - 100"
+SizeBox.TextColor3 = WHITE
+SizeBox.PlaceholderColor3 = GRAY
+SizeBox.TextSize = 11
+SizeBox.Font = Enum.Font.GothamBold
+SizeBox.ClearTextOnFocus = false
+SizeBox.ZIndex = 8
+SizeBox.Parent = SettingPage
+
+local SizeCorner = Instance.new("UICorner")
+SizeCorner.CornerRadius = UDim.new(0, 8)
+SizeCorner.Parent = SizeBox
+
+local function ApplySize()
+    local Number = tonumber(SizeBox.Text)
+
+    if not Number then
+        Number = 100
+    end
+
+    Number = math.clamp(Number, 50, 100)
+    SizeBox.Text = tostring(Number)
+
+    TweenService:Create(
+        MainScale,
+        TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {
+            Scale = Number / 100
+        }
+    ):Play()
+end
+
+SizeBox.FocusLost:Connect(function()
+    ApplySize()
+end)
+
+local OpenButton = Instance.new("ImageButton")
+OpenButton.Name = "VaxeroToggle"
+OpenButton.Size = UDim2.fromOffset(60, 38)
+OpenButton.Position = UDim2.new(0.065, 292, 0.14, 15)
+OpenButton.BackgroundColor3 = BG
+OpenButton.BorderSizePixel = 0
+OpenButton.Image = LOGO
+OpenButton.ImageTransparency = 0
+OpenButton.ScaleType = Enum.ScaleType.Crop
+OpenButton.AutoButtonColor = false
+OpenButton.ZIndex = 20
+OpenButton.Parent = ScreenGui
+
+local OpenCorner = Instance.new("UICorner")
+OpenCorner.CornerRadius = UDim.new(0, 10)
+OpenCorner.Parent = OpenButton
+
+OpenButton.MouseButton1Click:Connect(function()
+    Main.Visible = true
+    OpenButton.Visible = false
+end)
+
+CloseButton.MouseButton1Click:Connect(function()
+    Main.Visible = false
+    OpenButton.Visible = true
+end)
+
+local MainDragging = false
+local MainDragStart
+local MainStartPosition
+
+Title.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        MainDragging = true
+        MainDragStart = Input.Position
+        MainStartPosition = Main.Position
+    end
+end)
+
+UIS.InputChanged:Connect(function(Input)
+    if not MainDragging then
+        return
+    end
+
+    if Input.UserInputType == Enum.UserInputType.MouseMovement
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        local Delta = Input.Position - MainDragStart
+
+        Main.Position = UDim2.new(
+            MainStartPosition.X.Scale,
+            MainStartPosition.X.Offset + Delta.X,
+            MainStartPosition.Y.Scale,
+            MainStartPosition.Y.Offset + Delta.Y
+        )
+    end
+end)
+
+UIS.InputEnded:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        MainDragging = false
+    end
+end)
+
+local ButtonDragging = false
+local ButtonDragStart
+local ButtonStartPosition
+
+OpenButton.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        ButtonDragging = true
+        ButtonDragStart = Input.Position
+        ButtonStartPosition = OpenButton.Position
+    end
+end)
+
+UIS.InputChanged:Connect(function(Input)
+    if not ButtonDragging then
+        return
+    end
+
+    if Input.UserInputType == Enum.UserInputType.MouseMovement
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        local Delta = Input.Position - ButtonDragStart
+
+        OpenButton.Position = UDim2.new(
+            ButtonStartPosition.X.Scale,
+            ButtonStartPosition.X.Offset + Delta.X,
+            ButtonStartPosition.Y.Scale,
+            ButtonStartPosition.Y.Offset + Delta.Y
+        )
+    end
+end)
+
+UIS.InputEnded:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1
+    or Input.UserInputType == Enum.UserInputType.Touch then
+        ButtonDragging = false
+    end
+end)
+
+MainScale.Scale = 1
+Main.Visible = false
+OpenButton.Visible = true
+
+local MobileButtons = Instance.new("Frame")
+MobileButtons.Name = "MobileButtons"
+MobileButtons.Size = UDim2.fromOffset(120, 312)
+MobileButtons.Position = UDim2.new(1, -132, 0.5, -156)
+MobileButtons.BackgroundTransparency = 1
+MobileButtons.BorderSizePixel = 0
+MobileButtons.ZIndex = 50
+MobileButtons.Parent = ScreenGui
+
+local MB_SIZE = 56
+local MB_GAP = 8
+
+for i = 1, 9 do
+    local col = (i - 1) % 2
+    local row = math.floor((i - 1) / 2)
+
+    local Button = Instance.new("ImageButton")
+    Button.Name = "MobileButton" .. i
+    Button.Size = UDim2.fromOffset(MB_SIZE, MB_SIZE)
+    Button.Position = UDim2.fromOffset(
+        col * (MB_SIZE + MB_GAP),
+        row * (MB_SIZE + MB_GAP)
+    )
+
+    Button.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+    Button.BackgroundTransparency = 0
+    Button.BorderSizePixel = 0
+    Button.Image = "rbxassetid://88767169354876"
+    Button.ImageTransparency = 0.35
+    Button.ScaleType = Enum.ScaleType.Crop
+    Button.AutoButtonColor = false
+    Button.ZIndex = 51
+    Button.Parent = MobileButtons
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 10)
+    Corner.Parent = Button
+end
